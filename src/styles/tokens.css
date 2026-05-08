@@ -1,0 +1,79 @@
+/* ============================================================
+   Artes Lodge — Design Tokens
+   Source: WEBAL2.pdf (diseñadora)
+   ⚠️ TODO Claude Code: confirmar los valores marcados como TODO
+   abriendo el PDF original. Los hex/fonts aquí son placeholders
+   estructurales — la jerarquía y nombres de tokens son los que
+   se usan en todo el proyecto.
+   ============================================================ */
+
+:root {
+  /* ---------- Colores ---------- */
+  /* Paleta base detectada en el PDF (lodge / naturaleza, tonos cálidos
+     y neutros tierra). Confirmar hex exactos. */
+  --c-bg:            #F4F1EC;  /* TODO: confirmar — fondo principal claro */
+  --c-bg-alt:        #E8E2D7;  /* TODO: confirmar — fondo secciones alt */
+  --c-fg:            #1F1B16;  /* TODO: confirmar — texto principal */
+  --c-fg-muted:      #6B6258;  /* TODO: confirmar — texto secundario */
+  --c-accent:        #8A6A3B;  /* TODO: confirmar — acento marrón cálido */
+  --c-accent-soft:   #C9A876;  /* TODO: confirmar — acento claro */
+  --c-line:          #D6CFC2;  /* TODO: confirmar — bordes / divisores */
+  --c-overlay:       rgba(20, 16, 12, 0.35); /* overlay sobre imágenes */
+
+  /* ---------- Tipografía ---------- */
+  /* TODO: confirmar familias y pesos exactos del PDF.
+     El PDF muestra texto display "ARTES LODGE" en lo que parece
+     una serif/display elegante; el texto de cuerpo es sans humanista. */
+  --font-display:  "Cormorant Garamond", "Playfair Display", serif; /* TODO */
+  --font-body:     "Inter", "Helvetica Neue", system-ui, sans-serif; /* TODO */
+
+  /* Escala tipográfica (mobile-first; los md: del Tailwind config escalan) */
+  --fs-display:    clamp(2.5rem, 6vw, 5rem);    /* H1 hero */
+  --fs-h2:         clamp(1.75rem, 3.5vw, 2.5rem);
+  --fs-h3:         clamp(1.25rem, 2vw, 1.5rem);
+  --fs-body:       1rem;
+  --fs-small:      0.875rem;
+  --fs-eyebrow:    0.75rem;   /* "ENTORNO Y NATURALEZA" tipo kicker */
+
+  --lh-tight:      1.1;
+  --lh-snug:       1.25;
+  --lh-normal:     1.55;
+
+  --ls-display:    0.02em;
+  --ls-eyebrow:    0.18em;    /* tracking amplio en kickers */
+
+  /* ---------- Espaciado ---------- */
+  /* Escala 4-base. Secciones del landing usan --space-section. */
+  --space-1:  0.25rem;   /*  4 */
+  --space-2:  0.5rem;    /*  8 */
+  --space-3:  0.75rem;   /* 12 */
+  --space-4:  1rem;      /* 16 */
+  --space-5:  1.5rem;    /* 24 */
+  --space-6:  2rem;      /* 32 */
+  --space-7:  3rem;      /* 48 */
+  --space-8:  4rem;      /* 64 */
+  --space-9:  6rem;      /* 96 */
+  --space-section: clamp(3rem, 8vw, 6rem);  /* padding vertical de sección */
+  --gutter:        clamp(1rem, 4vw, 2rem);  /* padding lateral */
+
+  /* ---------- Bordes / radio ---------- */
+  --radius-sm: 2px;
+  --radius-md: 6px;
+  --radius-lg: 14px;     /* tarjetas / unidades */
+  --radius-pill: 999px;
+  --border-1:  1px solid var(--c-line);
+
+  /* ---------- Sombras ---------- */
+  --shadow-card:    0 6px 24px -8px rgba(20, 16, 12, 0.18);
+  --shadow-overlay: 0 24px 60px -20px rgba(20, 16, 12, 0.35);
+
+  /* ---------- Transiciones ---------- */
+  --t-fast:   180ms cubic-bezier(.2,.7,.3,1);
+  --t-base:   320ms cubic-bezier(.2,.7,.3,1);
+  --t-slow:   1200ms cubic-bezier(.4,.0,.2,1); /* hero crossfade */
+
+  /* ---------- Layout ---------- */
+  --maxw-content: 1280px;
+  --maxw-prose:   60ch;
+  --header-h:     112px;
+}
