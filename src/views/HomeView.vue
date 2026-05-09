@@ -104,6 +104,8 @@ const AMENITIES = [
       </div>
     </section>
 
+    <div class="w-full py-5 bg-[#6D7436]" aria-hidden="true" />
+
     <LocationMap :lat="LODGE_COORDS.lat" :lng="LODGE_COORDS.lng" />
 
     <section id="contact">

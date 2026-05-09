@@ -62,7 +62,7 @@ onBeforeUnmount(() => { stop(); io?.disconnect(); });
         :src="img.src"
         :alt="img.alt"
         class="absolute inset-0 h-full w-full object-cover transition-opacity"
-        :style="{ transitionDuration: fadeMs + 'ms' }"
+        :style="{ transitionDuration: fadeMs + 'ms', objectPosition: i === 0 ? 'center 90%' : 'center center' }"
         :class="i === active ? 'opacity-100' : 'opacity-0'"
         :aria-hidden="i !== active"
         :loading="i === 0 ? 'eager' : 'lazy'"

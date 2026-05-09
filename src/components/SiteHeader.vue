@@ -7,8 +7,8 @@ const mobileOpen = ref(false);
 const links = [
   { label: 'Home',    href: '#home' },
   { label: 'About',   href: '#about' },
-  { label: 'Lodge',   href: '#lodge' },
   { label: 'Patio',   href: '#patio' },
+  { label: 'Lodge',   href: '#lodge' },
   { label: 'Contact', href: '#contact' },
 ];
 </script>
@@ -142,7 +142,7 @@ const links = [
   display: flex;
   flex-direction: column;
   padding: 0.75rem var(--gutter, 1rem) 1.25rem;
-  background-color: rgba(109, 116, 54, 0.96);
+  background-color: transparent;
   gap: 0;
 }
 

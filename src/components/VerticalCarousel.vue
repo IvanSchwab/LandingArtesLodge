@@ -1,20 +1,120 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue';
 
-defineProps<{
+const props = defineProps<{
   title?: string;
   description?: string;
   slides: { src: string; alt: string; name: string; description?: string }[];
 }>();
 
+// 3 clones en cada extremo (una página de 3 columnas de ancho)
+// Estructura: [clone_n-3, clone_n-2, clone_n-1, real_0 … real_n-1, clone_0, clone_1, clone_2]
+const CLONES = 3;
+
+const augmented = computed(() => {
+  const s = props.slides;
+  if (s.length < 2) return s;
+  return [...s.slice(-CLONES), ...s, ...s.slice(0, CLONES)];
+});
+
+const isInfinite = computed(() => props.slides.length >= 2);
+
 const track = ref<HTMLElement | null>(null);
-function scrollByCard(dir: 1 | -1) {
+const currentIndex = ref(0);
+let isTeleporting = false;
+let debounceTimer: ReturnType<typeof setTimeout> | null = null;
+
+function teleport(targetLeft: number) {
   const t = track.value;
   if (!t) return;
-  const card = t.querySelector<HTMLElement>('[data-card]');
-  const w = card ? card.offsetWidth + 16 : t.clientWidth * 0.9;
-  t.scrollBy({ left: dir * w, behavior: 'smooth' });
+  isTeleporting = true;
+  t.style.scrollBehavior = 'auto';
+  t.scrollLeft = targetLeft;
+  requestAnimationFrame(() =>
+    requestAnimationFrame(() => {
+      t.style.scrollBehavior = '';
+      isTeleporting = false;
+    })
+  );
 }
+
+function updateCurrentIndex() {
+  if (isTeleporting) return;
+  const t = track.value;
+  if (!t) return;
+  const cards = Array.from(t.querySelectorAll<HTMLElement>('[data-card]'));
+  if (!cards.length) return;
+
+  let closest = 0;
+  let minDist = Infinity;
+  cards.forEach((card, i) => {
+    const dist = Math.abs(card.offsetLeft - t.scrollLeft);
+    if (dist < minDist) { minDist = dist; closest = i; }
+  });
+
+  const realIdx = ((closest - CLONES) % props.slides.length + props.slides.length) % props.slides.length;
+  currentIndex.value = realIdx;
+}
+
+function checkScrollBounds() {
+  if (isTeleporting) return;
+  const t = track.value;
+  if (!t || !isInfinite.value) return;
+
+  const cards = Array.from(t.querySelectorAll<HTMLElement>('[data-card]'));
+  if (!cards.length) return;
+
+  const { scrollLeft, scrollWidth, offsetWidth } = t;
+
+  if (scrollLeft >= scrollWidth - offsetWidth - 5) {
+    teleport(cards[CLONES].offsetLeft);
+  } else if (scrollLeft <= 5) {
+    teleport(cards[props.slides.length].offsetLeft);
+  }
+}
+
+function navigate(dir: 1 | -1) {
+  if (isTeleporting) return;
+  const t = track.value;
+  if (!t) return;
+
+  const cards = Array.from(t.querySelectorAll<HTMLElement>('[data-card]'));
+  if (!cards.length) return;
+
+  const currentIdx = cards.findIndex(c => c.offsetLeft >= t.scrollLeft - 1);
+  const base = currentIdx === -1 ? 0 : currentIdx;
+  const target = cards[Math.min(Math.max(base + dir, 0), cards.length - 1)];
+
+  target.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+}
+
+onMounted(() => {
+  nextTick(() => {
+    const t = track.value;
+    if (!t || !isInfinite.value) return;
+
+    const cards = Array.from(t.querySelectorAll<HTMLElement>('[data-card]'));
+    if (cards.length > CLONES) {
+      t.style.scrollBehavior = 'auto';
+      t.scrollLeft = cards[CLONES].offsetLeft;
+      requestAnimationFrame(() => requestAnimationFrame(() => { t.style.scrollBehavior = ''; }));
+    }
+
+    updateCurrentIndex();
+
+    t.addEventListener('scroll', () => {
+      if (debounceTimer) clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        checkScrollBounds();
+        updateCurrentIndex();
+      }, 200);
+    }, { passive: true });
+  });
+});
+
+onUnmounted(() => {
+  if (debounceTimer) clearTimeout(debounceTimer);
+});
 </script>
 
 <template>
@@ -33,8 +133,8 @@ function scrollByCard(dir: 1 | -1) {
           class="vc-track"
         >
           <article
-            v-for="s in slides"
-            :key="s.src"
+            v-for="(s, i) in augmented"
+            :key="i"
             data-card
             class="vc-item"
           >
@@ -45,12 +145,22 @@ function scrollByCard(dir: 1 | -1) {
         </div>
       </div>
 
+      <!-- Dots — solo mobile -->
+      <div class="vc-dots" aria-hidden="true">
+        <span
+          v-for="(_, i) in slides"
+          :key="i"
+          class="vc-dot"
+          :class="{ 'vc-dot--active': i === currentIndex }"
+        />
+      </div>
+
       <!-- Flechas fuera del card -->
       <div class="vc-controls">
-        <button type="button" aria-label="Anterior" class="vc-btn" @click="scrollByCard(-1)">
+        <button type="button" aria-label="Anterior" class="vc-btn" @click="navigate(-1)">
           <img src="@/assets/icons/icono1.svg" alt="" class="h-5 w-5" />
         </button>
-        <button type="button" aria-label="Siguiente" class="vc-btn" @click="scrollByCard(1)">
+        <button type="button" aria-label="Siguiente" class="vc-btn" @click="navigate(1)">
           <img src="@/assets/icons/icono2.svg" alt="" class="h-5 w-5" />
         </button>
       </div>
@@ -132,7 +242,17 @@ function scrollByCard(dir: 1 | -1) {
 }
 
 @media (max-width: 560px) {
-  .vc-item { width: 72%; }
+  .vc-card-wrap {
+    padding-inline: 0.75rem;
+  }
+
+  .vc-item {
+    width: 100%;
+  }
+
+  .vc-img-wrap {
+    aspect-ratio: 3 / 5;
+  }
 }
 
 .vc-img-wrap {
@@ -146,6 +266,33 @@ function scrollByCard(dir: 1 | -1) {
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+/* ── Dots — solo mobile ── */
+.vc-dots {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 560px) {
+  .vc-dots { display: flex; }
+}
+
+.vc-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: rgba(109, 116, 54, 0.3);
+  transition: background-color 220ms ease, transform 220ms ease;
+  flex-shrink: 0;
+}
+
+.vc-dot--active {
+  background-color: #6D7436;
+  transform: scale(1.35);
 }
 
 /* ── Flechas — centradas verticalmente al lado del card ── */
