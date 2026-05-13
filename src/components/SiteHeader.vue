@@ -5,11 +5,11 @@ import logoUrl from '@/assets/icons/AL.svg';
 const mobileOpen = ref(false);
 
 const links = [
-  { label: 'Home',    href: '#home' },
-  { label: 'About',   href: '#about' },
-  { label: 'Patio',   href: '#patio' },
-  { label: 'Lodge',   href: '#lodge' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Inicio',   href: '#home' },
+  { label: 'Nosotros', href: '#about' },
+  { label: 'Patio',    href: '#patio' },
+  { label: 'Lodge',    href: '#lodge' },
+  { label: 'Contacto', href: '#contact' },
 ];
 </script>
 

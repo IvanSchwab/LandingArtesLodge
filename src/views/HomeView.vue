@@ -1,26 +1,46 @@
 <script setup lang="ts">
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import HeroCrossfade from '@/components/HeroCrossfade.vue';
 import HorizontalCarousel from '@/components/HorizontalCarousel.vue';
 import VerticalCarousel from '@/components/VerticalCarousel.vue';
 import LocationMap from '@/components/LocationMap.vue';
 import SiteFooter from '@/components/SiteFooter.vue';
-import { LODGE_COORDS, HERO_IMAGES, NATURE_SLIDES, UNIT_SLIDES, PISCINA_IMAGE, LODGE_IMAGE, FOOTER_IMAGE } from '@/config/site';
+import { LODGE_COORDS, HERO_IMAGES, NATURE_SLIDES, UNIT_SLIDES, PISCINA_IMAGE, LODGE_IMAGES, FOOTER_IMAGE } from '@/config/site';
+
+const lodgeActive = ref(0);
+const lodgeRef = ref<HTMLElement | null>(null);
+let lodgeTimer: number | undefined;
+let lodgeVisible = true;
+
+function lodgeTick() {
+  if (lodgeVisible) lodgeActive.value = (lodgeActive.value + 1) % LODGE_IMAGES.length;
+}
+function lodgeStart() {
+  lodgeStop();
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches || LODGE_IMAGES.length < 2) return;
+  lodgeTimer = window.setInterval(lodgeTick, 2000);
+}
+function lodgeStop() { if (lodgeTimer) { clearInterval(lodgeTimer); lodgeTimer = undefined; } }
+
+let lodgeIO: IntersectionObserver | undefined;
+onMounted(() => {
+  lodgeStart();
+  if (lodgeRef.value) {
+    lodgeIO = new IntersectionObserver(([e]) => {
+      lodgeVisible = e.isIntersecting;
+      lodgeVisible ? lodgeStart() : lodgeStop();
+    }, { threshold: 0.1 });
+    lodgeIO.observe(lodgeRef.value);
+  }
+});
+onBeforeUnmount(() => { lodgeStop(); lodgeIO?.disconnect(); });
 
 import iconPiscina from '@/assets/icons/piscina.svg';
-import iconWifi from '@/assets/icons/wifi.svg';
-import iconTV from '@/assets/icons/TV.svg';
+import iconArbolesLight from '@/assets/icons/arboles-light.svg';
+import iconHornitoLight from '@/assets/icons/hornito-light.svg';
+import iconWifiDark from '@/assets/icons/wifi-dark.svg';
+import iconTVDark from '@/assets/icons/TV-dark.svg';
 import iconAire from '@/assets/icons/aire.svg';
-import iconHornito from '@/assets/icons/hornito.svg';
-import iconArboles from '@/assets/icons/arboles.svg';
-
-const AMENITIES = [
-  { icon: iconPiscina,  label: 'Piscina' },
-  { icon: iconWifi,     label: 'WiFi' },
-  { icon: iconTV,       label: 'Smart TV' },
-  { icon: iconAire,     label: 'Climatización' },
-  { icon: iconHornito,  label: 'Parrilla' },
-  { icon: iconArboles,  label: 'Entorno natural' },
-];
 </script>
 
 <template>
@@ -53,28 +73,38 @@ const AMENITIES = [
       <HorizontalCarousel :slides="NATURE_SLIDES" />
     </section>
 
-    <!-- Separador iconos: piscina · wifi · tv -->
-    <section class="icon-strip">
+    <!-- Separador iconos: piscina · naturaleza · parrilla -->
+    <section class="icon-strip icon-strip--tall">
       <div class="icon-strip__item">
         <img :src="iconPiscina" alt="" class="icon-strip__icon" />
         <span class="icon-strip__label">Piscina</span>
       </div>
       <div class="icon-strip__item">
-        <img :src="iconWifi" alt="" class="icon-strip__icon" />
-        <span class="icon-strip__label">Wifi</span>
+        <img :src="iconArbolesLight" alt="" class="icon-strip__icon" />
+        <span class="icon-strip__label">Naturaleza</span>
       </div>
       <div class="icon-strip__item">
-        <img :src="iconTV" alt="" class="icon-strip__icon" />
-        <span class="icon-strip__label">Televisión</span>
+        <img :src="iconHornitoLight" alt="" class="icon-strip__icon" />
+        <span class="icon-strip__label">Parrilla</span>
       </div>
     </section>
 
     <!-- Lodge — imagen full-bleed con overlay de texto -->
-    <section id="patio" class="lodge-hero">
-      <img :src="LODGE_IMAGE.src" :alt="LODGE_IMAGE.alt" class="lodge-hero__img" loading="lazy" />
+    <section id="patio" class="lodge-hero" ref="lodgeRef">
+      <img
+        v-for="(img, i) in LODGE_IMAGES"
+        :key="img.src"
+        :src="img.src"
+        :alt="img.alt"
+        class="lodge-hero__img"
+        :class="i === lodgeActive ? 'lodge-hero__img--active' : 'lodge-hero__img--hidden'"
+        :loading="i === 0 ? 'eager' : 'lazy'"
+        decoding="async"
+        :aria-hidden="i !== lodgeActive"
+      />
       <div class="lodge-hero__overlay" />
       <div class="lodge-hero__content">
-        <p class="lodge-hero__eyebrow">Lodge · Patio</p>
+        <p class="lodge-hero__eyebrow">Lodge · Departamento</p>
         <h2 class="lodge-hero__title">Espacios para el descanso</h2>
         <p class="lodge-hero__body">Cada cabaña fue diseñada para dos personas, con ambientes cálidos, luz natural y acceso directo al jardín. Un lugar donde el tiempo pasa diferente.</p>
       </div>
@@ -88,19 +118,19 @@ const AMENITIES = [
       />
     </section>
 
-    <!-- Separador iconos: aire · arboles · hornito -->
+    <!-- Separador iconos: aire · wifi · tv -->
     <section class="icon-strip icon-strip--inverted">
       <div class="icon-strip__item">
         <img :src="iconAire" alt="" class="icon-strip__icon" />
         <span class="icon-strip__label">A/C</span>
       </div>
       <div class="icon-strip__item">
-        <img :src="iconArboles" alt="" class="icon-strip__icon" />
-        <span class="icon-strip__label">Naturaleza</span>
+        <img :src="iconWifiDark" alt="" class="icon-strip__icon" />
+        <span class="icon-strip__label">Wifi</span>
       </div>
       <div class="icon-strip__item">
-        <img :src="iconHornito" alt="" class="icon-strip__icon" />
-        <span class="icon-strip__label">Cocina</span>
+        <img :src="iconTVDark" alt="" class="icon-strip__icon" />
+        <span class="icon-strip__label">Smart TV</span>
       </div>
     </section>
 
@@ -160,7 +190,11 @@ const AMENITIES = [
   height: 100%;
   object-fit: cover;
   object-position: center 80%;
+  transition: opacity 700ms ease-in-out;
 }
+
+.lodge-hero__img--active  { opacity: 1; }
+.lodge-hero__img--hidden  { opacity: 0; }
 
 .lodge-hero__overlay {
   position: absolute;
@@ -190,6 +224,7 @@ const AMENITIES = [
   color: #f0e6d5;
   opacity: 0.75;
   margin: 0 0 0.75rem;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.45);
 }
 
 .lodge-hero__title {
@@ -198,6 +233,7 @@ const AMENITIES = [
   line-height: 1.1;
   color: #f0e6d5;
   margin: 0 0 1rem;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
 .lodge-hero__body {
@@ -208,6 +244,7 @@ const AMENITIES = [
   opacity: 0.85;
   margin: 0;
   max-width: 52ch;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
 }
 
 /* ── Separador de iconos ── */
@@ -239,6 +276,11 @@ const AMENITIES = [
   letter-spacing: 0.08em;
   color: #f0e6d5;
   text-transform: uppercase;
+}
+
+.icon-strip--tall {
+  padding-top: clamp(4rem, 10vw, 5rem);
+  padding-bottom: clamp(4rem, 10vw, 5rem);
 }
 
 .icon-strip--inverted {

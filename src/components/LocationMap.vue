@@ -122,7 +122,7 @@ onBeforeUnmount(() => { map?.remove(); });
 
         <!-- Columna del mapa -->
         <div class="lg:col-span-2 relative">
-          <div class="map-deco absolute -inset-3 rounded-[1.75rem] -rotate-1" aria-hidden="true"></div>
+          <div class="map-deco absolute -inset-3 rounded-[2rem]" aria-hidden="true"></div>
           <div class="relative h-[420px] md:h-[520px] w-full rounded-[1.25rem] overflow-hidden shadow-overlay map-frame">
             <div ref="el" class="w-full h-full map-filter" />
           </div>

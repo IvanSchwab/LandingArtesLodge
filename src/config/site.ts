@@ -39,5 +39,12 @@ export const UNIT_SLIDES = [
 ];
 
 export const PISCINA_IMAGE  = { src: '/src/assets/images/piscina.jpg',   alt: 'Piscina' };
-export const LODGE_IMAGE    = { src: '/src/assets/images/DSC_1223.jpg',  alt: 'Interior del lodge' };
+export const LODGE_IMAGES = [
+  { src: '/src/assets/images/fade-2.jpg', alt: 'Interior del lodge' },
+  { src: '/src/assets/images/fade-3.jpg', alt: 'Interior del lodge' },
+  { src: '/src/assets/images/fade-4.jpg', alt: 'Interior del lodge' },
+  { src: '/src/assets/images/fade-5.jpg', alt: 'Interior del lodge' },
+  { src: '/src/assets/images/fade-6.jpg', alt: 'Interior del lodge' },
+  { src: '/src/assets/images/fade-7.jpg', alt: 'Interior del lodge' },
+];
 export const FOOTER_IMAGE  = { src: '/src/assets/images/footer.jpg',  alt: 'Detalle del lodge' };
