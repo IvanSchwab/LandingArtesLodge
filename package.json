@@ -15,7 +15,9 @@
     "vue": "^3.4.0"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild"]
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   },
   "devDependencies": {
     "@types/leaflet": "^1.9.12",

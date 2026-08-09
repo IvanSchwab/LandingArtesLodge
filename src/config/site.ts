@@ -8,43 +8,43 @@ export const CONTACT = {
 };
 
 export const HERO_IMAGES = [
-  { src: '/assets/images/hero-1.jpg', alt: 'Lodge al atardecer' },
-  { src: '/assets/images/hero-2.jpg', alt: 'Vista del entorno' },
-  { src: '/assets/images/hero-3.jpg', alt: 'Interior de la unidad' },
-  { src: '/assets/images/hero-4.jpg', alt: 'Piscina desde el exterior' },
+  { src: '/assets/images/hero-1.webp', alt: 'Lodge al atardecer' },
+  { src: '/assets/images/hero-2.webp', alt: 'Vista del entorno' },
+  { src: '/assets/images/hero-3.webp', alt: 'Interior de la unidad' },
+  { src: '/assets/images/hero-4.webp', alt: 'Piscina desde el exterior' },
 ];
 
 export const NATURE_SLIDES = [
-  { src: '/assets/images/int-1.jpg', alt: 'Interior 1', caption: '' },
-  { src: '/assets/images/int-2.jpg', alt: 'Interior 2', caption: '' },
-  { src: '/assets/images/int-3.jpg', alt: 'Interior 3', caption: '' },
-  { src: '/assets/images/int-4.jpg', alt: 'Interior 4', caption: '' },
-  { src: '/assets/images/int-5.jpg', alt: 'Interior 5', caption: '' },
-  { src: '/assets/images/int-6.jpg', alt: 'Interior 6', caption: '' },
-  { src: '/assets/images/int-7.jpg', alt: 'Interior 7', caption: '' },
+  { src: '/assets/images/int-1.webp', alt: 'Interior 1', caption: '' },
+  { src: '/assets/images/int-2.webp', alt: 'Interior 2', caption: '' },
+  { src: '/assets/images/int-3.webp', alt: 'Interior 3', caption: '' },
+  { src: '/assets/images/int-4.webp', alt: 'Interior 4', caption: '' },
+  { src: '/assets/images/int-5.webp', alt: 'Interior 5', caption: '' },
+  { src: '/assets/images/int-6.webp', alt: 'Interior 6', caption: '' },
+  { src: '/assets/images/int-7.webp', alt: 'Interior 7', caption: '' },
 ];
 
 export const UNIT_SLIDES = [
-  { src: '/assets/images/unit-1.jpg', alt: 'Unidad 1', name: 'Unidad — 01', description: '' },
-  { src: '/assets/images/unit-2.jpg', alt: 'Unidad 2', name: 'Unidad — 01', description: '' },
-  { src: '/assets/images/unit-3.jpg', alt: 'Unidad 3', name: 'Unidad — 01', description: '' },
-  { src: '/assets/images/unit-4.jpg', alt: 'Unidad 4', name: 'Unidad — 02', description: '' },
-  { src: '/assets/images/unit-5.jpg', alt: 'Unidad 5', name: 'Unidad — 03', description: '' },
-  { src: '/assets/images/unit-6.jpg', alt: 'Unidad 6', name: 'Unidad — 03', description: '' },
-  { src: '/assets/images/unit-7.jpg', alt: 'Unidad 7', name: 'Unidad — 03', description: '' },
-  { src: '/assets/images/unit-8.jpg', alt: 'Unidad 8', name: 'Unidad — 03', description: '' },
-  { src: '/assets/images/unit-9.jpg', alt: 'Unidad 9', name: 'Unidad — 03', description: '' },
-  { src: '/assets/images/unit-10.jpg', alt: 'Unidad 10', name: 'Unidad — 03', description: '' },
-  { src: '/assets/images/unit-11.jpg', alt: 'Unidad 11', name: 'Unidad — 03', description: '' },
+  { src: '/assets/images/unit-1.webp', alt: 'Unidad 1', name: 'Unidad — 01', description: '' },
+  { src: '/assets/images/unit-2.webp', alt: 'Unidad 2', name: 'Unidad — 01', description: '' },
+  { src: '/assets/images/unit-3.webp', alt: 'Unidad 3', name: 'Unidad — 01', description: '' },
+  { src: '/assets/images/unit-4.webp', alt: 'Unidad 4', name: 'Unidad — 02', description: '' },
+  { src: '/assets/images/unit-5.webp', alt: 'Unidad 5', name: 'Unidad — 03', description: '' },
+  { src: '/assets/images/unit-6.webp', alt: 'Unidad 6', name: 'Unidad — 03', description: '' },
+  { src: '/assets/images/unit-7.webp', alt: 'Unidad 7', name: 'Unidad — 03', description: '' },
+  { src: '/assets/images/unit-8.webp', alt: 'Unidad 8', name: 'Unidad — 03', description: '' },
+  { src: '/assets/images/unit-9.webp', alt: 'Unidad 9', name: 'Unidad — 03', description: '' },
+  { src: '/assets/images/unit-10.webp', alt: 'Unidad 10', name: 'Unidad — 03', description: '' },
+  { src: '/assets/images/unit-11.webp', alt: 'Unidad 11', name: 'Unidad — 03', description: '' },
 ];
 
-export const PISCINA_IMAGE = { src: '/assets/images/piscina.jpg', alt: 'Piscina' };
+export const PISCINA_IMAGE = { src: '/assets/images/piscina.webp', alt: 'Piscina' };
 export const LODGE_IMAGES = [
-  { src: '/assets/images/fade-2.jpg', alt: 'Interior del lodge' },
-  { src: '/assets/images/fade-3.jpg', alt: 'Interior del lodge' },
-  { src: '/assets/images/fade-4.jpg', alt: 'Interior del lodge' },
-  { src: '/assets/images/fade-5.jpg', alt: 'Interior del lodge' },
-  { src: '/assets/images/fade-6.jpg', alt: 'Interior del lodge' },
-  { src: '/assets/images/fade-7.jpg', alt: 'Interior del lodge' },
+  { src: '/assets/images/fade-2.webp', alt: 'Interior del lodge' },
+  { src: '/assets/images/fade-3.webp', alt: 'Interior del lodge' },
+  { src: '/assets/images/fade-4.webp', alt: 'Interior del lodge' },
+  { src: '/assets/images/fade-5.webp', alt: 'Interior del lodge' },
+  { src: '/assets/images/fade-6.webp', alt: 'Interior del lodge' },
+  { src: '/assets/images/fade-7.webp', alt: 'Interior del lodge' },
 ];
-export const FOOTER_IMAGE = { src: '/assets/images/footer.jpg', alt: 'Detalle del lodge' };
+export const FOOTER_IMAGE = { src: '/assets/images/footer.webp', alt: 'Detalle del lodge' };
