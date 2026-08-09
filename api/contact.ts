@@ -1,8 +1,7 @@
 /**
- * /api/contact — handler serverless (Vercel / Netlify / Nitro).
- * Adaptar la firma según el runtime; la lógica es la misma.
+ * /api/contact — Vercel Function (Node.js runtime).
  *
- * ENV requeridas:
+ * ENV requeridas (configurar en Vercel → Project Settings → Environment Variables):
  *   RESEND_API_KEY        → key de Resend
  *   CONTACT_TO_EMAIL      → destino (ej: hola@arteslodge.com)
  *   CONTACT_FROM_EMAIL    → remitente verificado en Resend
