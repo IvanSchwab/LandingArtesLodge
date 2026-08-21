@@ -90,7 +90,7 @@ import iconAire from '@/assets/icons/aire.svg';
     </section>
 
     <!-- Lodge — imagen full-bleed con overlay de texto -->
-    <section id="patio" class="lodge-hero" ref="lodgeRef">
+    <section id="lodge" class="lodge-hero" ref="lodgeRef">
       <img
         v-for="(img, i) in LODGE_IMAGES"
         :key="img.src"
@@ -110,7 +110,7 @@ import iconAire from '@/assets/icons/aire.svg';
       </div>
     </section>
 
-    <section id="lodge">
+    <section id="nosotros">
       <VerticalCarousel
         title="Nuestras Unidades"
         description="Cabañas equipadas para dos personas. Espacios cálidos e íntimos con vista exclusiva al patio o la piscina."

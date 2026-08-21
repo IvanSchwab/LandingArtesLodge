@@ -6,9 +6,9 @@ const mobileOpen = ref(false);
 
 const links = [
   { label: 'Inicio',   href: '#home' },
-  { label: 'Nosotros', href: '#about' },
-  { label: 'Patio',    href: '#patio' },
+  { label: 'Patio', href: '#about' },
   { label: 'Lodge',    href: '#lodge' },
+  { label: 'Nosotros',    href: '#nosotros' },
   { label: 'Contacto', href: '#contact' },
 ];
 </script>
